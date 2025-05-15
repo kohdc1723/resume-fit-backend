@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+model Resume {
+  id              String    @id @default(cuid())
+  title           String
+  createdDateTime DateTime  @default(now()) @map("created_date_time")
+  updatedDateTime DateTime  @updatedAt @map("updated_date_time")
+  userId          String    @map("user_id")
+
+  sections        Section[]
+
+  @@map("resume")
+}
+
+enum SectionType {
+  CONTACT
+  EDUCATION
+  WORK_EXPERIENCE
+  SKILLS
+  PROJECTS
+}
+
+model Section {
+  id              String           @id @default(cuid())
+  type            SectionType
+  index           Int              @default(0)
+  hidden          Boolean          @default(false)
+  contact         Contact?
+  educations      Education[]
+  workExperiences WorkExperience[]
+  skills          Skill[]
+  projects        Project[]
+
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId String @map("resume_id")
+
+  @@unique([resumeId, type])
+  @@map("section")
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  fullName  String?  @map("full_name")
+  location  String?
+  phone     String?
+  email     String?
+  links     String[] @db.Text
+  userId    String   @map("user_id")
+
+  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId String  @unique @map("section_id")
+
+  @@map("contact")
+}
+
+model Education {
+  id        String    @id @default(cuid())
+  school    String?
+  location  String?
+  degree    String?
+  field     String?
+  gpa       Float?    @db.Real
+  startDate DateTime?
+  endDate   DateTime?
+  isPresent Boolean?
+  bullets   String[]  @db.Text
+  index     Int       @default(0)
+  userId    String    @map("user_id")
+
+  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId String  @map("section_id")
+
+  @@map("education")
+}
+
+enum WorkMode {
+  ON_SITE
+  REMOTE
+  HYBRID
+}
+
+enum EmploymentType {
+  PERMANENT_FULL_TIME
+  PERMANENT_PART_TIME
+  CONTRACT_FULL_TIME
+  CONTRACT_PART_TIME
+  FREELANCE
+  INTERNSHIP
+  CO_OP
+  SEASONAL
+  APPRENTICESHIP
+  SELF_EMPLOYED
+  CASUAL
+  ON_CALL
+}
+
+model WorkExperience {
+  id        String     @id @default(cuid())
+  company   String?
+  location  String?
+  positions Position[]
+  index     Int        @default(0)
+  userId    String     @map("user_id")
+
+  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId String  @map("section_id")
+
+  @@map("work_experience")
+}
+
+model Position {
+  id               String          @id @default(cuid())
+  title            String?
+  workMode         WorkMode?       @map("work_mode")
+  employmentType   EmploymentType? @map("employment_type")
+  startDate        DateTime?       @map("start_date")
+  endDate          DateTime?       @map("end_date")
+  isPresent        Boolean?        @default(false) @map("is_present")
+  bullets          String[]        @db.Text
+  index            Int             @default(0)
+  userId           String          @map("user_id")
+
+  workExperience   WorkExperience @relation(fields: [workExperienceId], references: [id], onDelete: Cascade)
+  workExperienceId String         @map("work_experience_id")
+
+  @@map("position")
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  category  String?
+  skills    String[]
+  index     Int      @default(0)
+  userId    String   @map("user_id")
+
+  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId String  @map("section_id")
+
+  @@map("skill")
+}
+
+model Project {
+  id        String    @id @default(cuid())
+  title     String?
+  startDate DateTime? @map("start_date")
+  endDate   DateTime? @map("end_date")
+  isPresent Boolean?  @default(false) @map("is_present")
+  bullets   String[]  @db.Text
+  index     Int       @default(0)
+  userId    String    @map("user_id")
+
+  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId String  @map("section_id")
+
+  @@map("project")
+}
