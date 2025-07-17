@@ -3,7 +3,7 @@ import {
   SectionType,
   WorkMode,
   EmploymentType,
-} from '../generated/prisma';
+} from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -29,46 +29,7 @@ async function main() {
                 userId: 'user_2wnO3Y6GwAnrrxrsT6y04cBJUeA',
               },
             },
-          },
-          {
-            type: SectionType.EDUCATION,
-            educations: {
-              create: [
-                {
-                  school: 'University of British Columbia',
-                  location: 'Vancouver, BC',
-                  degree: 'Bachelor of Science',
-                  field: 'Computer Science',
-                  gpa: 3.9,
-                  startDate: new Date('2011-01'),
-                  endDate: new Date('2016-05'),
-                  isPresent: false,
-                  bullets: [
-                    'Received scholarship for outstanding academic performance during undergraduate studies',
-                    'First startup during school',
-                    'Presented research paper at Computer Science Society',
-                  ],
-                  userId: 'user_2wnO3Y6GwAnrrxrsT6y04cBJUeA',
-                  index: 0,
-                },
-                {
-                  school: 'British Columbia Institute of Technology',
-                  location: 'Burnaby, BC',
-                  degree: 'Diploma',
-                  field: 'Computer Systems Technology',
-                  startDate: new Date('2008-01'),
-                  endDate: new Date('2010-05'),
-                  isPresent: false,
-                  bullets: [
-                    'Graduated with honors in computer systems technology program',
-                    'Focused on entrepreneurial ventures instead of academic pursuits',
-                    'Identified business opportunities during the early internet revolution',
-                  ],
-                  userId: 'user_2wnO3Y6GwAnrrxrsT6y04cBJUeA',
-                  index: 1,
-                },
-              ],
-            },
+            index: 0,
           },
           {
             type: SectionType.WORK_EXPERIENCE,
@@ -148,6 +109,39 @@ async function main() {
                 },
               ],
             },
+            index: 1,
+          },
+          {
+            type: SectionType.PROJECTS,
+            projects: {
+              create: [
+                {
+                  title: 'Personal Website',
+                  startDate: new Date('2020-01'),
+                  endDate: new Date('2021-01'),
+                  bullets: [
+                    'Developed a personal website using Next.js and Tailwind CSS',
+                    'Implemented a blog section with Markdown support',
+                    'Added a contact form for user inquiries',
+                  ],
+                  userId: 'user_2wnO3Y6GwAnrrxrsT6y04cBJUeA',
+                  index: 0,
+                },
+                {
+                  title: 'Hackathon Project',
+                  startDate: new Date('2016-01'),
+                  endDate: new Date('2016-05'),
+                  bullets: [
+                    'Developed a web application for a hackathon',
+                    'Implemented a chatbot using RAG technology',
+                    'Added a contact form for user inquiries',
+                  ],
+                  userId: 'user_2wnO3Y6GwAnrrxrsT6y04cBJUeA',
+                  index: 1,
+                },
+              ],
+            },
+            index: 2,
           },
           {
             type: SectionType.SKILLS,
@@ -192,37 +186,48 @@ async function main() {
                 },
               ],
             },
+            index: 3,
           },
           {
-            type: SectionType.PROJECTS,
-            projects: {
+            type: SectionType.EDUCATION,
+            educations: {
               create: [
                 {
-                  title: 'Personal Website',
-                  startDate: new Date('2020-01'),
-                  endDate: new Date('2021-01'),
+                  school: 'University of British Columbia',
+                  location: 'Vancouver, BC',
+                  degree: 'Bachelor of Science',
+                  field: 'Computer Science',
+                  gpa: 3.9,
+                  startDate: new Date('2011-01'),
+                  endDate: new Date('2016-05'),
+                  isPresent: false,
                   bullets: [
-                    'Developed a personal website using Next.js and Tailwind CSS',
-                    'Implemented a blog section with Markdown support',
-                    'Added a contact form for user inquiries',
+                    'Received scholarship for outstanding academic performance during undergraduate studies',
+                    'First startup during school',
+                    'Presented research paper at Computer Science Society',
                   ],
                   userId: 'user_2wnO3Y6GwAnrrxrsT6y04cBJUeA',
                   index: 0,
                 },
                 {
-                  title: 'Hackathon Project',
-                  startDate: new Date('2016-01'),
-                  endDate: new Date('2016-05'),
+                  school: 'British Columbia Institute of Technology',
+                  location: 'Burnaby, BC',
+                  degree: 'Diploma',
+                  field: 'Computer Systems Technology',
+                  startDate: new Date('2008-01'),
+                  endDate: new Date('2010-05'),
+                  isPresent: false,
                   bullets: [
-                    'Developed a web application for a hackathon',
-                    'Implemented a chatbot using RAG technology',
-                    'Added a contact form for user inquiries',
+                    'Graduated with honors in computer systems technology program',
+                    'Focused on entrepreneurial ventures instead of academic pursuits',
+                    'Identified business opportunities during the early internet revolution',
                   ],
                   userId: 'user_2wnO3Y6GwAnrrxrsT6y04cBJUeA',
                   index: 1,
                 },
               ],
             },
+            index: 4,
           },
         ],
       },

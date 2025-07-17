@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        box-sizing: border-box;
+      }
+      .resume {
+        font-family: 'Poppins', sans-serif;
+        font-size: 10pt;
+        font-weight: 500;
+        padding: 20pt;
+      }
+      .section {
+        display: flex;
+        flex-direction: column;
+        gap: 10pt; /* vertical gap between title and contents */
+      }
+      .resume-title {
+        font-size: 24pt;
+        font-weight: 900;
+      }
+      .divider {
+        border-top: 1px solid black;
+      }
+      .contact-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4pt;
+      }
+    </style>
+    <title>Resume Title</title>
+  </head>
+  <body>
+    <main class="resume">
+      {{#each resume.sections}}
+        {{#unless hidden}}
+          {{#if (eq type 'CONTACT')}}
+            {{> contact this}}
+          {{/if}}
+          {{#if (eq type 'WORK_EXPERIENCE')}}
+            {{> work-experience this}}
+          {{/if}}
+          {{#if (eq type 'EDUCATION')}}
+            {{> education this}}
+          {{/if}}
+          {{#if (eq type 'SKILLS')}}
+            {{> skills this}}
+          {{/if}}
+          {{#if (eq type 'PROJECTS')}}
+            {{> projects this}}
+          {{/if}}
+        {{/unless}}
+      {{/each}}
+    </main>
+  </body>
+</html>

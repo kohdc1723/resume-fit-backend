@@ -1,0 +1,13 @@
+<section class="section contact">
+  <p class="resume-title">
+    {{contact.fullName}}
+  </p>
+  <div class="contact-container">
+    <p class="contact-list">
+      {{#each (formatContacts contact)}}
+        {{this}}
+      {{/each}}
+    </p>
+    <div class="divider" />
+  </div>
+</section>
